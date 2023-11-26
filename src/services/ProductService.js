@@ -11,22 +11,21 @@ const create = async (object_product) => {
     return Product.create(object_product)
 }
 
-const findAllByMerchant = (merchant_id) => {
-    return Product.findOne({
+const findAllByMerchant = (merchant_id, category_id) => {
+    const query = {
         where: {
-            MerchantId: merchant_id,
+            MerchantId: merchant_id,           
         },
         raw: true,
-    })
+    }
+    if (category_id){
+        query.where.CategoryId = category_id
+    }
+    return Product.findAll(query)
 }
-
-
-
-
-
 
 
 module.exports = {
     findAllByMerchant,
-    create
+    create,    
 }

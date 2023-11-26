@@ -9,12 +9,21 @@ const listAllByMerchant = async (req, res) => {
     try {
        //sort por preco, mais vendidos, mais recente, melhor avaliado
        // paginacao
+        let categoryId = undefined
         const merchantId = req.decoded.merchant.id
         const merchant = await MerchantService.findById(merchantId)
         if (!merchant) {
             throw new Error("estabelecimento não encontrado")
         }
-        const products = await ProductService.findAllByMerchant(merchantId)
+        if(req.query.category){
+            const category = await CategoryService.findById(req.query.category)
+            if(!category){
+                throw new Error("categoria invalida")
+            }
+            categoryId = req.query.category
+        }
+
+        const products = await ProductService.findAllByMerchant(merchantId, categoryId)
         res.json({
             success: true,
             data: products,           
@@ -28,6 +37,8 @@ const listAllByMerchant = async (req, res) => {
         })
     }
 }
+
+
 
 
 const create = async (req, res) => {
