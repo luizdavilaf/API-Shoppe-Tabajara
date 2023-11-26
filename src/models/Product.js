@@ -27,6 +27,11 @@ Product.init({
     {
         type: DataTypes.STRING,
         comment: 'imagem do produto',
+    },    
+    description:
+    {
+        type: DataTypes.STRING,
+        comment: 'descricao do produto',
     },
    
 }, {

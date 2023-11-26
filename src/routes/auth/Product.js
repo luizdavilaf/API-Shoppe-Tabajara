@@ -5,7 +5,7 @@ const ProductController = require("../../controllers/ProductController")
 
 router.post('/', ProductController.create);
 
-router.post('/login', ProductController.listAll);
+router.get('/', ProductController.listAllByMerchant);
 
 
 module.exports = router

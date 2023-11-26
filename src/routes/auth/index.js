@@ -8,7 +8,8 @@ router.use((req, res, next) => {
         return res.status(403).send('A token is required for authentication.');
     }
     try {
-        req.user = jwt.verify(token, config.jwt_secret);
+        req.decoded = {}
+        req.decoded.merchant = jwt.verify(token, config.jwt_secret);
     } catch (err) {
         return res.status(401).send('Invalid Token');
     }
@@ -19,6 +20,9 @@ router.use((req, res, next) => {
 const product = require('./Product');
 router.use('/products', product);
 
+
+const category = require('./Category');
+router.use('/categories', category);
 
 
 

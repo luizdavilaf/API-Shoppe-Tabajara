@@ -7,9 +7,9 @@ const login = async (req, res) => {
         if (!username || !password) {
             throw new Error("username e password sao obrigatórios")
         }
-        const merchant = MerchantService.findByUsername(username)
+        const merchant = await MerchantService.findByUsername(username)
         if (!merchant) {
-            throw new Error("Usuário não encontrado.")
+            throw new Error("Estabelecimento não encontrado.")
         }
         if (merchant.password !== password) {
             throw new Error("Senha incorreta.")
@@ -36,11 +36,15 @@ const create = async (req, res) => {
         if (!merchantObject.name || !merchantObject.username || !merchantObject.password) {
             throw new Error("name, username e password sao obrigatórios")
         }
+        const existant = await MerchantService.findByUsername(merchantObject.username)        
+        if(existant){
+            throw new Error("Já existe estabelecimento com o nome")
+        }
         const merchant = await MerchantService.create(merchantObject)
         res.json({
             success: true,
             data: merchant,
-            message: "Usuário criado com sucesso."
+            message: "Estabelecimento criado com sucesso."
         })
     } catch (error) {
         res.status(500).json({

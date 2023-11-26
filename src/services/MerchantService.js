@@ -9,6 +9,11 @@ const findByUsername = (username) => {
 
 }
 
+const findById = (id) => {
+    return Merchant.findByPk(id)
+
+}
+
 
 const create = (object_merchant) =>{
     return Merchant.create(object_merchant)
@@ -22,5 +27,6 @@ const create = (object_merchant) =>{
 
 module.exports = {
     findByUsername,
-    create
+    create,
+    findById
 }
